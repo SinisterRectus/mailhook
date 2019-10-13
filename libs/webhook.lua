@@ -11,19 +11,6 @@ local DELAY = 2500 -- ms
 
 -- normal ratelimit is 5/2s, but there is a hidden 30/60s limit per channel
 
-local function truncateString(str, n, suffix)
-	if #str <= n then
-		return str
-	else
-		if suffix then
-			assert(n > #suffix, 'string suffix too long')
-			return str:sub(1, n - #suffix) .. suffix
-		else
-			return str:sub(1, n)
-		end
-	end
-end
-
 local function post(id, token, title, description)
 
 	timer.sleep(DELAY)
@@ -33,8 +20,8 @@ local function post(id, token, title, description)
 	local content = json.encode {
 		embeds = {
 			{
-				title = truncateString(title, TITLE_LIMIT, ' ...'),
-				description = truncateString(description, DESCRIPTION_LIMIT, ' ...'),
+				title = utils.truncateString(title, TITLE_LIMIT, ' ...'),
+				description = utils.truncateString(description, DESCRIPTION_LIMIT, ' ...'),
 			}
 		},
 	}
