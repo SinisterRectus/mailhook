@@ -75,9 +75,6 @@ local tags = {
 
 	['<li>'] = ' - ',
 
-	['<br>'] = '\n',
-	['<hr>'] = '----\n',
-
 	['<h1>'] = '# ',
 	['<h2>'] = '## ',
 	['<h3>'] = '### ',
@@ -106,6 +103,7 @@ local function cleanBody(str)
 	str = str:gsub('&(%a-);', chars)
 	str = str:gsub('&#(%d-);', utf8dec)
 	str = str:gsub('&#x(%x-);', utf8hex)
+	str = str:gsub('__?%w+', '\\%1')
 
 	str = str:gsub('\n+', function(s)
 		if #s > 2 then
