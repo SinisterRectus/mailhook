@@ -1,4 +1,5 @@
 local f = string.format
+local len, offset = utf8.len, utf8.offset
 
 local function log(fmt, ...)
 	print(f('%s | %s', os.date('%F %T'), f(fmt, ...)))
@@ -15,14 +16,14 @@ local function task(fn)
 end
 
 local function truncateString(str, n, suffix)
-	if #str <= n then
+	if len(str) <= n then
 		return str
 	else
 		if suffix then
-			assert(n > #suffix, 'string suffix too long')
-			return str:sub(1, n - #suffix) .. suffix
+			assert(n > len(suffix), 'string suffix too long')
+			return str:sub(1, offset(str, n - #suffix)) .. suffix
 		else
-			return str:sub(1, n)
+			return str:sub(1, offset(str, n))
 		end
 	end
 end
